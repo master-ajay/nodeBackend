@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/master-ajay/nodeBackend#readme",
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3"
   }
 }
