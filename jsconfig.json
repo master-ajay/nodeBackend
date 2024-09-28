@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+      "target": "ES6",           // Target ECMAScript version
+      "module": "commonjs",      // Use CommonJS for Node.js
+      "checkJs": true,           // Enable type checking for JavaScript files
+      "allowSyntheticDefaultImports": true,  // Allows ES6 style imports in CommonJS
+      "baseUrl": ".",            // Set the base URL to the project root
+      "paths": {
+        "*": ["node_modules/*"], // Define module resolution for better IntelliSense
+        "@/*": ["src/*"]         // Set up alias for imports, e.g., "@/utils"
+      }
+    },
+    "include": [
+      "src/**/*",                // Include all files in the 'src' folder
+      "app.js",                  // Add entry point if not in 'src'
+      "config/**/*",             // Include any config files
+      "routes/**/*",             // Include your route files
+      "controllers/**/*",        // Include controllers if used
+      "middlewares/**/*"         // Include middlewares if used
+    ],
+    "exclude": [
+      "node_modules",            // Exclude node_modules to avoid issues
+      "dist",                    // Exclude build output folder
+      "tests"                    // Exclude test files (optional)
+    ]
+  }
+  
