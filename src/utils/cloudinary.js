@@ -5,20 +5,40 @@ import fs from "fs";
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET, // Click 'View API Keys' above to copy your API secret
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+const fileExists = (filePath) => {
+  try {
+    return fs.existsSync(filePath);
+  } catch (err) {
+    console.error(`Error checking file existence: ${err.message}`);
+    return false;
+  }
+};
 
 const uploadOnCloudinary = async (localFilePath) => {
   try {
     if (!localFilePath) return null;
+
     // upload the file on cloudinary
     const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
     });
-    console.log("file is uploaded on cloudinary", response.url);
+
+    // Check if file exists before trying to delete it
+    if (fileExists(localFilePath)) {
+      fs.unlinkSync(localFilePath); // remove the local file after successful upload
+    }
+
+    return response;
   } catch (error) {
-    console.log(error);
-    fs.unlinkSync(localFilePath); // remove the locally saved temporary file  as upload operation got failed
+    console.error(`Cloudinary upload failed: ${JSON.stringify(error)}`);
+
+    // Ensure file exists before attempting to delete it
+    if (fileExists(localFilePath)) {
+      fs.unlinkSync(localFilePath); // remove the local file if an error occurred
+    }
   }
 };
 
